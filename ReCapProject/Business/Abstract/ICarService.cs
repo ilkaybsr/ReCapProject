@@ -14,5 +14,11 @@ namespace Business
         public List<Car> GetAll();
 
         public List<Car> GetById(int carID);
+
+        List<Car> GetAllByBrandId(int id);
+        List<Car> GetAllByColorId(int id);
+        List<Car> GetByDailyPrice();
+
+
     }
 }
