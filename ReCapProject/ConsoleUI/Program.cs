@@ -2,6 +2,7 @@
 using Business.Concrete;
 using DataAccess.Concrete;
 using DataAccess.Concrete.EntityFramework;
+using Entities.Concrete;
 using System;
 
 namespace ConsoleUI
@@ -10,6 +11,17 @@ namespace ConsoleUI
     {
         static void Main(string[] args)
         {
+            var userService = new UserManager(new EfUserDal());
+            var customerService = new CustomerManager(new EfCustomerDal()) ;
+
+            var user = userService.GetAll()[0];
+
+            customerService.Add(new Customer
+            {
+                UserId = user.Id,
+                CompanyName = "Test Company"
+            });
+            
             CarTest();
 
             //BrandTest();
