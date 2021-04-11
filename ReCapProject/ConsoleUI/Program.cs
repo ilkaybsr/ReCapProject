@@ -1,5 +1,6 @@
 ﻿using Business;
 using Business.Concrete;
+using Business.Constants;
 using DataAccess.Concrete;
 using DataAccess.Concrete.EntityFramework;
 using Entities.Concrete;
@@ -11,23 +12,27 @@ namespace ConsoleUI
     {
         static void Main(string[] args)
         {
-            var userService = new UserManager(new EfUserDal());
-            var customerService = new CustomerManager(new EfCustomerDal()) ;
-
-            var user = userService.GetAll()[0];
-
-            customerService.Add(new Customer
-            {
-                UserId = user.Id,
-                CompanyName = "Test Company"
-            });
-            
+            UserTest();
+            CustomerTest();
             CarTest();
+
 
             //BrandTest();
 
             //ColorTest();
 
+        }
+
+        private static void UserTest()
+        {
+            UserManager userManager = new UserManager(new EfUserDal());
+            userManager.Add(new User { FirstName = "İlkay", LastName = "Aydın", Email = "ilkaybsr@gmail.com", Password = "123" });
+        }
+
+        private static void CustomerTest()
+        {
+            CustomerManager customerManager = new CustomerManager(new EfCustomerDal());
+            customerManager.Add(new Customer { Id = 1, UserId =1, CompanyName = "Scrape.do "});
         }
 
         private static void ColorTest()
@@ -60,6 +65,9 @@ namespace ConsoleUI
                 {
                     Console.WriteLine(car.CarName + "/" + car.DailyPrice + "/" + car.BrandName + "/" + car.ColorName);
                 }
+                RentalManager rentalManager = new RentalManager(new EfRentalDal());
+                var rentResult = rentalManager.Add(new Rental() { CarId = 1, CustomerId = 1, RentDate = DateTime.Now });
+                Console.WriteLine(Messages.CarRented);
             }
 
             else

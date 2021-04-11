@@ -34,12 +34,13 @@ namespace Business.Concrete
 
         public IDataResult<User> GetById(int Id)
         {
-            _userDal
+            return new SuccessDataResult<User>(_userDal.Get(c => c.Id == Id));
         }
 
         public IResult Update(User user)
         {
-            throw new NotImplementedException();
+            _userDal.Update(user);
+            return new Result(true);
         }
     }
 }
